@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import './App.css';
 
-const initialItems = [
-  { id: 1, description: 'Passports', quantity: 2, captured: false },
-  { id: 2, description: 'Socks', quantity: 12, captured: false },
-  { id: 3, description: 'Socks', quantity: 12, captured: true },
-];
+// const initialItems = [
+//   { id: 1, description: 'Passports', quantity: 2, captured: false },
+//   { id: 2, description: 'Socks', quantity: 12, captured: false },
+//   { id: 3, description: 'Socks', quantity: 12, captured: true },
+// ];
 
 export default function App() {
   const [photos, setPhotos] = useState([]);
@@ -17,13 +17,25 @@ export default function App() {
   function handleDeletePhoto(id) {
     setPhotos((photos) => photos.filter((photo) => photo.id !== id));
   }
+
+  function handleTogglePhoto(id) {
+    setPhotos((photos) =>
+      photos.map((photo) =>
+        photo.id === id ? { ...photo, captured: !photo.captured } : photo
+      )
+    );
+  }
   return (
     <>
       <div className='app'>
         <Logo />
         <Form onAddPhotos={handleAddPhotos} />
-        <PhotoList photos={photos} onDeletePhoto={handleDeletePhoto} />
-        <Stats />
+        <PhotoList
+          photos={photos}
+          onDeletePhoto={handleDeletePhoto}
+          onTogglePhoto={handleTogglePhoto}
+        />
+        <Stats photos={photos} />
       </div>
     </>
   );
@@ -78,21 +90,31 @@ function Form({ onAddPhotos }) {
   );
 }
 
-function PhotoList({ photos, onDeletePhoto }) {
+function PhotoList({ photos, onDeletePhoto, onTogglePhoto }) {
   return (
     <div className='list'>
       <ul>
         {photos.map((photo) => (
-          <Photo photo={photo} key={photo.id} onDeletePhoto={onDeletePhoto} />
+          <Photo
+            photo={photo}
+            key={photo.id}
+            onDeletePhoto={onDeletePhoto}
+            onTogglePhoto={onTogglePhoto}
+          />
         ))}
       </ul>
     </div>
   );
 }
 
-function Photo({ photo, onDeletePhoto }) {
+function Photo({ photo, onDeletePhoto, onTogglePhoto }) {
   return (
     <li>
+      <input
+        type='checkbox'
+        value={photo.captured}
+        onChange={() => onTogglePhoto(photo.id)}
+      />
       <span style={photo.captured ? { textDecoration: 'line-through' } : {}}>
         {photo.quantity} {photo.description}
       </span>
@@ -101,10 +123,27 @@ function Photo({ photo, onDeletePhoto }) {
   );
 }
 
-function Stats() {
+function Stats({ photos }) {
+  if (!photos.length)
+    return (
+      <p className='stats'>
+        <em>Start adding some photos to your list</em>
+      </p>
+    );
+  // Calculating 85
+  const numPhotos = photos.length;
+  const numCaptured = photos.filter((photo) => photo.captured).length;
+  const percentage = Math.round((numCaptured / numPhotos) * 100);
   return (
     <footer className='stats'>
-      <em>You have X items on your list, and you we already captured X (X%)</em>
+      <em>
+        {percentage === 100
+          ? 'You got everything photographed 📸'
+          : `You have ${numPhotos} items on your list, 
+          and you we already captured
+        ${numCaptured} 
+        (${percentage}%) `}
+      </em>
     </footer>
   );
 }
