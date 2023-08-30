@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import { ThemeProvider } from 'theme-ui';
+import { Box, Button, Select, Input, Text } from 'theme-ui';
+import theme from './styles/theme'; // Import your theme
 import './App.css';
 
+import GlobalStyles from './styles/globalStyles'; // Import the GlobalStyles component
 // const initialItems = [
 //   { id: 1, description: 'Passports', quantity: 2, captured: false },
 //   { id: 2, description: 'Socks', quantity: 12, captured: false },
@@ -27,16 +31,40 @@ export default function App() {
   }
   return (
     <>
-      <div className='app'>
-        <Logo />
-        <Form onAddPhotos={handleAddPhotos} />
-        <PhotoList
-          photos={photos}
-          onDeletePhoto={handleDeletePhoto}
-          onTogglePhoto={handleTogglePhoto}
-        />
-        <Stats photos={photos} />
-      </div>
+      <ThemeProvider theme={theme}>
+        <div className='app'>
+          <GlobalStyles />
+          <Box
+            sx={{
+              width: '100%',
+              height: '100vh',
+              display: 'grid',
+              gridTemplateRows: 'auto auto 1fr auto',
+              // paddingBottom: '5rem',
+              /* Add more styles as needed */
+            }}
+          >
+            <h1>📸 Photo List</h1>
+            <Form onAddPhotos={handleAddPhotos} />
+            <PhotoList
+              photos={photos}
+              onDeletePhoto={handleDeletePhoto}
+              onTogglePhoto={handleTogglePhoto}
+            />
+            <Stats photos={photos} />
+          </Box>
+
+          {/* <Logo /> */}
+
+          {/* <Form onAddPhotos={handleAddPhotos} /> */}
+          {/* <PhotoList
+            photos={photos}
+            onDeletePhoto={handleDeletePhoto}
+            onTogglePhoto={handleTogglePhoto}
+          /> */}
+          {/* <Stats photos={photos} /> */}
+        </div>
+      </ThemeProvider>
     </>
   );
 }
@@ -86,6 +114,7 @@ function Form({ onAddPhotos }) {
         onChange={(e) => setDescription(e.target.value)}
       />
       <button>Add</button>
+      <Button sx={{ variant: 'buttons.primary' }}>Button</Button>
     </form>
   );
 }
@@ -126,9 +155,15 @@ function Photo({ photo, onDeletePhoto, onTogglePhoto }) {
 function Stats({ photos }) {
   if (!photos.length)
     return (
-      <p className='stats'>
-        <em>Start adding some photos to your list</em>
-      </p>
+      <>
+        {/* <Heading>Heading 1</Heading> */}
+        <Text as='h1' variant='heading1'>
+          Heading 1
+        </Text>
+        <p className='stats'>
+          <em>Start adding some photos to your list</em>
+        </p>
+      </>
     );
   // Calculating 85
   const numPhotos = photos.length;
