@@ -34,14 +34,13 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <div className='app'>
           <GlobalStyles />
-          <Box
+          {/* <Box
             sx={{
               width: '100%',
               height: '100vh',
               display: 'grid',
               gridTemplateRows: 'auto auto 1fr auto',
-              // paddingBottom: '5rem',
-              /* Add more styles as needed */
+ 
             }}
           >
             <h1>📸 Photo List</h1>
@@ -52,8 +51,15 @@ export default function App() {
               onTogglePhoto={handleTogglePhoto}
             />
             <Stats photos={photos} />
-          </Box>
-
+          </Box> */}
+          <h1>📸 Photo List</h1>
+          <Form onAddPhotos={handleAddPhotos} />
+          <PhotoList
+            photos={photos}
+            onDeletePhoto={handleDeletePhoto}
+            onTogglePhoto={handleTogglePhoto}
+          />
+          <Stats photos={photos} />
           {/* <Logo /> */}
 
           {/* <Form onAddPhotos={handleAddPhotos} /> */}
@@ -157,9 +163,9 @@ function Stats({ photos }) {
     return (
       <>
         {/* <Heading>Heading 1</Heading> */}
-        <Text as='h1' variant='heading1'>
+        {/* <Text as='h1' variant='heading1'>
           Heading 1
-        </Text>
+        </Text> */}
         <p className='stats'>
           <em>Start adding some photos to your list</em>
         </p>

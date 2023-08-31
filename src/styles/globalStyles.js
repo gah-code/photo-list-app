@@ -36,6 +36,13 @@ body {
 }
 
   /* Add any other global styles you need */
+
+  @media (max-width: 59em) {
+  .app{
+      grid-template-rows: auto 70vh 1fr auto;
+  }
+}
+
 `;
 
 export default GlobalStyles;
