@@ -27,7 +27,7 @@ html {
 
 h1 {
   text-align: center;
-  background-color: #f4a226;
+  background-color: #f7e7ce;
   font-family: 'Monoton';
   font-size: 8rem;
   text-transform: uppercase;
@@ -133,7 +133,7 @@ input[type='checkbox'] {
 @media (max-width: 59em) {
   h1 {
     text-align: center;
-    background-color: #f4a226;
+    /* background-color: #f4a226; */
     font-family: 'Monoton';
     font-size: 5.2rem;
     text-transform: uppercase;

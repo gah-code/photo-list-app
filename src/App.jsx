@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ThemeProvider } from 'theme-ui';
-import { Box, Button, Select, Input, Text } from 'theme-ui';
+import { Button } from 'theme-ui';
 import theme from './styles/theme'; // Import your theme
 import './App.css';
 
